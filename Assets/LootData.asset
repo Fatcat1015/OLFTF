@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: LootData
   m_EditorClassIdentifier: 
   num_of_Slots: 0
+  if_searched: 0
   LootSlots:
-  - {fileID: 3652278681141806723, guid: ac8ef8237ed730e45a9f78093ad7a216, type: 3}
-  - {fileID: 6878248812264025374, guid: e6ba2d38648b00943a45aa5cb9c6518f, type: 3}
-  Loot_num: 0200000001000000
+  - {fileID: 8676094183789514107, guid: 61414207effe87e48ba7895cc0a12241, type: 3}
+  - {fileID: 8676094183789514107, guid: 61414207effe87e48ba7895cc0a12241, type: 3}
+  Loot_num: 
+  temp_LootSlots: []
+  temp_Loot_num: 

@@ -11,6 +11,8 @@ TagManager:
   - heal_pickup
   - bomb_pickup
   - Player_detection
+  - Cursor
+  - Loot
   layers:
   - Default
   - TransparentFX

@@ -6,12 +6,14 @@ public class mouse_UI : MonoBehaviour
 {
     Vector3 cursorlocation;
     SpriteRenderer cursor;
+    GameObject loot;
     void Start()
     {
         cursor = GetComponent<SpriteRenderer>();
+        loot = null;
     }
 
-    void FixedUpdate()
+    void Update()
     {
         cursorlocation = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         transform.position = new Vector3(cursorlocation.x, cursorlocation.y, transform.position.z);
@@ -19,6 +21,11 @@ public class mouse_UI : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             cursor.color = Color.red;
+
+            if(loot!= null)
+            {
+                //Destroy(loot);
+            }
         }
         else
         {
@@ -34,5 +41,21 @@ public class mouse_UI : MonoBehaviour
     public void Unclick()
     {
         cursor.color = Color.white;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Loot"))
+        {
+            loot = collision.gameObject;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Loot"))
+        {
+            loot = null;
+        }
     }
 }
