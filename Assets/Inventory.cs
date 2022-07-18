@@ -8,15 +8,22 @@ public class Inventory : MonoBehaviour
     public GameObject Hotbar;
     public GameObject Inventory_Interface;
     public GameObject Crafting_Interface;
+    public int maximum_carrying;
 
-    public List<string> Inventory_Items = new List<string>();
+    public int Hotbar_max;
+
+    public List<GameObject> Inventory_Items = new List<GameObject>();
 
     public bool open_inventory = false;
 
     private void Start()
     {
+        Inventory_Items.Clear();
+        maximum_carrying = 10;
+        Hotbar_max = 2;
         Inventory_Interface.SetActive(false);
         Crafting_Interface.SetActive(false);
+        Hotbar.SetActive(true);
     }
     void Update()
     {
@@ -34,24 +41,54 @@ public class Inventory : MonoBehaviour
         }
         else
         {
-            Inventory_Interface.SetActive(false); ;
+            Inventory_Interface.SetActive(false); 
             Crafting_Interface.SetActive(false);
         }
         
         //sort items into slots in hotbar/inventory
 
-        if(Inventory_Items.Count!= 0)
+        foreach(Transform child in Inventory_Interface.transform)
         {
-            foreach (string item in Inventory_Items)
-            {
 
-            }
         }
     }
 
-    public void AddItemInventory(GameObject item, int number)
+    public void AddItemInventory(GameObject item)
     {
-        Inventory_Items.Add(item.name);
-        Destroy(item);
+        if(Inventory_Items.Count < maximum_carrying )
+        {
+            Inventory_Items.Add(item);
+            if (Hotbar.transform.childCount < Hotbar_max)
+            {
+                item.transform.SetParent(Hotbar.transform);
+                item.GetComponent<RectTransform>().position = Hotbar.transform.position;
+            }
+            else
+            {
+                item.transform.SetParent(Inventory_Interface.transform);
+                item.GetComponent<RectTransform>().position = Inventory_Interface.transform.position;
+            }
+            
+        }
+        else
+        {
+            Debug.Log("can not fit into inventory");
+            Debug.Log(Inventory_Items.Count);
+            Debug.Log(maximum_carrying);
+        }
+        SortInventory();
+    }
+
+    public void SortInventory()
+    {
+        for (int i = 0; i<Hotbar.transform.childCount; i++)
+        {
+            Hotbar.transform.GetChild(i).transform.position = new Vector2(Hotbar.transform.position.x + 5*i -100, Hotbar.transform.position.y);
+        }
+
+        for (int i = 0; i < Inventory_Interface.transform.childCount; i++)
+        {
+            Inventory_Interface.transform.GetChild(i).transform.position = new Vector2(Inventory_Interface.transform.position.x + 5 * i - 100, Inventory_Interface.transform.position.y);
+        }
     }
 }
